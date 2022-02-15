@@ -22,5 +22,5 @@ SO THAT I can manage my time effectively
 
 <br/>
 
-### Click [here](https://nevan-dsouza.github.io/Password-Generator/) to view the page
+### Click [here](https://nevan-dsouza.github.io/scheduler/) to view the page
 <br/>
