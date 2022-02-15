@@ -18,7 +18,7 @@ SO THAT I can manage my time effectively
 <br/>
 
 ## **Work Day Scheduler Page**
-![Work Day Scheduler Page](./Assets/CapturePage.png)
+![Work Day Scheduler Page](./assets/images/screenshot.png)
 
 <br/>
 
