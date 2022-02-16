@@ -1,57 +1,58 @@
-$(document).ready(function(){
-    // Variable Declarations
-    const m = moment();
-    let currentDayEl = $("#currentDay");
-    let timings = [];
-    let rootEl = $("#hero");
-    let current = moment().format('LLLL')
-    console.log(current);
-    
-    let currentTime = moment().format('HH');
-    console.log(currentTime);
-    
-    // Functions
-    // Time Display
-    function Time(){
-        currentDayEl.text(m.format('dddd[,] MMMM Do'));
-    }
-    
-    $('input').each(function(){
-        let color = parseInt($(this).attr('time'));
-        console.log(color);
-        if(currentTime==color){
-            $(this).addClass('Present');
-        } else if(currentTime<color){
-            $(this).addClass('Future');
-        } else{
-            $(this).addClass('Past');
+// Variable declarations
+let today = moment();
+let currentHr = parseInt(today.format("H"));
+let headerDate = today.format("dddd, MMMM Do");
+let saveDate = today.format("L");
+let timeBlockEl = $(".time-block");
+let timeBlockId = timeBlockEl.attr("id");
+let timeBlockHr = parseInt(timeBlockId);
+let saveBtnEl = $(".saveBtn");
+
+
+// Function that adds appropriate color to timeblock based on current time
+function timeBlockStyle() {
+    timeBlockEl.each(function () {
+        // Use "this" so that it works for each block in the container
+        timeBlockHr = parseInt($(this).attr("id"));
+        // First we remove every class
+        $(this).removeClass("past future present");
+        // Then add the class to each block accordingly
+        if (currentHr > timeBlockHr) {
+            $(this).addClass("past");
+        } else if (currentHr < timeBlockHr) {
+            $(this).addClass("future");
+        } else {
+            $(this).addClass("present");
         }
-        saveData();
-    })
-    
-    // Row Timings
-    function rowStatus(){
-        let currentTime = m.format('hh');
-        // console.log(currentTime);
+    });
+}
 
-        for(let i = 9; i<18; i++){
-            timings.push(i);
-            // console.log(timings);
-        }
-        // console.log(timings);
-    }
+// Function for saving data in local storage
+function saveText(event) {
+    // Redefines timeBlockId to refer to the time block the save button belongs to
+    let timeBlockId = $(this).parent().attr("id");
+    let textAreaContent = $('#' + timeBlockId + " textarea").val()
+    // This sets a unique key for each time block while also saving the content
+    // Key is unique to that day
+    localStorage.setItem(saveDate + "-" + timeBlockId, textAreaContent);
+}
 
-    // Local Storage
-    function saveData(){
-        localStorage.setItem('input',JSON.stringify($('input').val()))
-    }
+// Function for loading data in text area from local storage
+function loadText() {
+    timeBlockEl.each(function () {
+        // Redefines timeBlockId to use "this" so that it refers each time block in this function
+        let timeBlockId = $(this).attr("id");
+        let textArea = $('#' + timeBlockId + " textarea");
+        // Key changes every day
+        textArea.text(localStorage.getItem(saveDate + "-" + timeBlockId));
+    });
+}
 
-    function loadData(){
-        localStorage.getItem('input')
-    }
+// Displays time
+$("#currentDay").text(headerDate);
 
-    // Calling functions
-    Time();
-    rowStatus();
-    loadData();
-})
+// Call functions & event handlers
+timeBlockStyle();
+loadText();
+saveBtnEl.on("click", saveText);
+

@@ -11,7 +11,8 @@ SO THAT I can manage my time effectively
 <br/>
 
 ## **What has been coded?**
-* HTML - Used Bootstrap and added comments to make code understandable.
+* HTML - made a jumbotron and time-blocks.
+* CSS - Used Bootstrap and custom CSS.
 * JS - Used JQuery, Moment.js & local storage concepts.
 <br/>
 
